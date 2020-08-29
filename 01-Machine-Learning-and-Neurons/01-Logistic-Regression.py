@@ -12,6 +12,9 @@ from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
+gpus = tf.config.experimental.list_physical_devices('GPU')
+tf.config.experimental.set_memory_growth(gpus[0], True)
+
 
 # Load the data
 data = load_breast_cancer()
@@ -37,11 +40,15 @@ scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.fit_transform(X_test)
 
-# Build the model
-model = tf.keras.models.Sequential([
-    tf.keras.layers.Input(shape=(D,)),
-    tf.keras.layers.Dense(1, activation='sigmoid')
-    ])
+# # Build the model
+# model = tf.keras.models.Sequential([
+#     tf.keras.layers.Input(shape=(D,)),
+#     tf.keras.layers.Dense(1, activation='sigmoid')
+#     ])
+
+# Alternatively to build the model
+model = tf.keras.models.Sequential()
+model.add(tf.keras.layers.Dense(1, input_shape=(D,), activation='sigmoid'))
 
 model.compile(optimizer='adam',
               loss='binary_crossentropy',
@@ -80,10 +87,9 @@ print("Manually calculated accuracy: {}".format(np.mean(P == y_test)))
 print("Evaluate output: {}".format(model.evaluate(X_test, y_test)))
 
 # Save model to a file
-model.save("./01-Machine-Learning-and-Neurons/models/linearclassifier.hs")
+model.save('saved_models/LogisticRegressionModel')
 
 # Load the model
-model = tf.keras.models.load_model("./01-Machine-Learning-and-Neurons\
-                                   /models/linearclassifier.hs")
+model = tf.keras.models.load_model('saved_models/LogisticRegressionModel')
 print(model.layers)
 print(model.evaluate(X_test, y_test))

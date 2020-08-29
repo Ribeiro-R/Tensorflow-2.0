@@ -10,6 +10,9 @@ import pandas as pd
 import tensorflow as tf
 import matplotlib.pyplot as plt
 
+gpus = tf.config.experimental.list_physical_devices('GPU')
+tf.config.experimental.set_memory_growth(gpus[0], True)
+
 
 # Learning rate scheduler
 def schedule(epoch, lr):
@@ -71,7 +74,7 @@ print("TIme to double: {}".format(np.log(2)/a))
 
 # Make sure the line fits our data
 yhat = model.predict(X).flatten()
-plt.scater(X, y)
+plt.scatter(X, y)
 plt.plot(X, yhat)
 
 # Manual Calculation
@@ -81,13 +84,12 @@ w, b = model.layers[0].get_weights()
 X = X.reshape(-1, 1)
 # (Nx1)x(1x1)+(1)-->(Nx1)
 yhat2 = (X.dot(w)+b).flatten()
-print(np.allclose(yhat, ythat2))
+print(np.allclose(yhat, yhat2))
 
 # Save model to a file
-model.save("./01-Machine-Learning-and-Neurons/models/linearregression.hs")
+model.save('saved_models/LinearRegressionModel')
 
 # Load the model
-model = tf.keras.models.load_model("./01-Machine-Learning-and-Neurons\
-                                   /models/linearregression.hs")
+model = tf.keras.models.load_model('saved_models/LinearRegressionModel')
 print(model.layers)
-print(model.evaluate(X_test, y_test))
+print(model.layers[0].get_weights())
