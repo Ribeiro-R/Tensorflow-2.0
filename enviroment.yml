@@ -1,0 +1,13 @@
+name: tf_env
+channels:
+  - defaults
+dependencies:
+  - python=3.7
+  - spyder=4.0.0
+  - pandas=1.1.1
+  - scikit-learn=0.23.2
+  - matplotlib=3.3.1
+  - tensorflow-gpu=2.2.0
+prefix: ~/anaconda3/envs/tf_env
+# conda env create -f environment.yml
+# conda env export --from-history
