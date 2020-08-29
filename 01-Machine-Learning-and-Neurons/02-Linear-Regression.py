@@ -67,5 +67,27 @@ print(model.layers[0].get_weights())
 
 # The slope of the line
 a = model.layers[0].get_weights()[0][0, 0]
-
 print("TIme to double: {}".format(np.log(2)/a))
+
+# Make sure the line fits our data
+yhat = model.predict(X).flatten()
+plt.scater(X, y)
+plt.plot(X, yhat)
+
+# Manual Calculation
+# Get the Weights
+w, b = model.layers[0].get_weights()
+# Reshape X
+X = X.reshape(-1, 1)
+# (Nx1)x(1x1)+(1)-->(Nx1)
+yhat2 = (X.dot(w)+b).flatten()
+print(np.allclose(yhat, ythat2))
+
+# Save model to a file
+model.save("./01-Machine-Learning-and-Neurons/models/linearregression.hs")
+
+# Load the model
+model = tf.keras.models.load_model("./01-Machine-Learning-and-Neurons\
+                                   /models/linearregression.hs")
+print(model.layers)
+print(model.evaluate(X_test, y_test))

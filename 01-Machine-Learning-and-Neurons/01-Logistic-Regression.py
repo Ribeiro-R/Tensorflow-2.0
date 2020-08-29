@@ -5,6 +5,7 @@ Created on Fri Aug 28 17:10:02 2020
 @author: rodrigo
 """
 
+import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 from sklearn.datasets import load_breast_cancer
@@ -66,5 +67,23 @@ plt.legend(loc='best')
 plt.show()
 
 # Make predictions
+# They are outputs of the sigmoid, interpreted as propabilities p(y=1|x)
 P = model.predict(X_test)
 print("{}".format(P))
+
+# To get the predictions: P has to be flattened since the targets are size
+# (N,) while the predictions are size (N,1)
+P = np.round(P).flatten()
+
+# Calculate the accuracy, compare it to evaluete() output
+print("Manually calculated accuracy: {}".format(np.mean(P == y_test)))
+print("Evaluate output: {}".format(model.evaluate(X_test, y_test)))
+
+# Save model to a file
+model.save("./01-Machine-Learning-and-Neurons/models/linearclassifier.hs")
+
+# Load the model
+model = tf.keras.models.load_model("./01-Machine-Learning-and-Neurons\
+                                   /models/linearclassifier.hs")
+print(model.layers)
+print(model.evaluate(X_test, y_test))
