@@ -31,14 +31,14 @@ for t in range(len(series)-T):
     y = series[t+T]
     Y.append(y)
 
-#Data Shape N x T x D
-X = np.array(X).reshape(-1, T,1)
+# Data Shape N x T x D
+X = np.array(X).reshape(-1, T, 1)
 Y = np.array(Y)
 N = len(X)
 
 # RNN with no activation function ---> Reduces to a linear model
 # Linear model is perfect for this dataset
-i = Input(shape=(T,1))
+i = Input(shape=(T, 1))
 x = SimpleRNN(5, activation=None)(i)
 x = Dense(1)(x)
 model = Model(i, x)

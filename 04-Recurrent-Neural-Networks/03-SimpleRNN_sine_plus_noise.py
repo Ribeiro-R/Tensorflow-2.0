@@ -5,14 +5,6 @@ Created on Sat Sep 19 10:32:22 2020
 @author: rodrigo
 """
 
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Sep 19 10:03:01 2020
-
-@author: rodrigo
-"""
-
-
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
@@ -39,12 +31,12 @@ for t in range(len(series)-T):
     Y.append(y)
 
 # Data Shape N x T x D
-X = np.array(X).reshape(-1, T,1)
+X = np.array(X).reshape(-1, T, 1)
 Y = np.array(Y)
 N = len(X)
 
 # RNN
-i = Input(shape=(T,1))
+i = Input(shape=(T, 1))
 x = SimpleRNN(5, activation=None)(i)
 x = Dense(1)(x)
 model = Model(i, x)
@@ -83,4 +75,3 @@ plt.plot(validation_target, label='forecast target')
 plt.plot(validation_predictions, label='forecast prediction')
 plt.legend(loc='best')
 plt.show()
-

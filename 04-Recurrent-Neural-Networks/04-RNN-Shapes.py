@@ -31,7 +31,7 @@ K = 2
 X = np.random.randn(N, T, D)
 
 # Make an RNN
-M = 5 # number of hidden units
+M = 5  # number of hidden units
 i = Input(shape=(T, D))
 x = SimpleRNN(M, activation='tanh')(i)
 x = Dense(K)(x)
@@ -61,9 +61,9 @@ Wx, Wh, bh = model.layers[1].get_weights()
 Wo, bo = model.layers[2].get_weights()
 
 
-h_last = np.zeros(M) # initial hidden state
-x = X # sample
-Yhats = [] # where we store the outputs
+h_last = np.zeros(M)  # initial hidden state
+x = X  # sample
+Yhats = []  # where we store the outputs
 
 for i in range(len(x)):
     for t in range(T):
